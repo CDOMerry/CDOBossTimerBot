@@ -199,7 +199,7 @@ async def alert(ctx, alerttime):
         await ctx.message.add_reaction("❌")
         pass
         
-#@cdobt.command(pass_context = True) #this is really annoying and doesn't really server a purpose, might be better if we were to make a role for each boss and ping the role depending on which boss spawned? idk, either way I'll add dm alerts soon and there will be literally no point to mentioning roles.
+#@cdobt.command(pass_context = True) #this is really annoying and doesn't really serve a purpose, might be better if we were to make a role for each boss and ping the role depending on which boss spawned? idk, either way I'll add dm alerts soon and there will be literally no point to mentioning roles.
 #async def mention(ctx, rolename):      
 #    if not ctx.message.author.guild_permissions.administrator:
 #        await ctx.message.add_reaction("❌")

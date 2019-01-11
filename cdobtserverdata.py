@@ -12,7 +12,7 @@ from discord.ext.commands import Bot
 from discord.utils import find
 
 def get_server_data_by_key(serverid, key):
-    if key == "isenabled" or key == "channelid" or key == "alerttime":
+    if key == "prefix" or key == "channelid" or key == "alerttime":
         with open("servers/"+str(serverid)+".json", "r", encoding="utf-8") as jsonf:
             data = json.load(jsonf)
         return data.get(key)
@@ -21,14 +21,14 @@ def get_server_data_by_key(serverid, key):
         return None
         
 def get_server_data(serverid):
-    isenabled = get_server_data_by_key(serverid, "isenabled")
+    prefix = get_server_data_by_key(serverid, "prefix")
     channelid = get_server_data_by_key(serverid, "channelid")
     alerttime = get_server_data_by_key(serverid, "alerttime")
-    return {"isenabled":isenabled, "channelid":channelid, "alerttime":alerttime}
+    return {"prefix":prefix, "channelid":channelid, "alerttime":alerttime}
     
-def update_server_data(serverid, isenabled = 0, channelid = 0, alerttime = 15):
+def update_server_data(serverid, prefix = "bt!", channelid = 0, alerttime = 15):
     data = {
-        "isenabled": isenabled,
+        "prefix": prefix,
         "channelid": channelid,
         "alerttime": alerttime
     }
@@ -36,22 +36,36 @@ def update_server_data(serverid, isenabled = 0, channelid = 0, alerttime = 15):
         json.dump(data, jsonf, sort_keys = True, indent = 2, ensure_ascii = False)
     jsonf.close() 
 
-def update_server_data_isenabled(serverid, isenabled):
+def fix_old_server_data():
+    file_list=os.listdir("servers/")
+    for file in file_list:
+        with open("servers/"+file, "r", encoding="utf-8") as jsonf:
+            data = json.load(jsonf)
+            jsonf.close() 
+            newdata = {
+                "prefix": "bt!",
+                "channelid": data.get("channelid"),
+                "alerttime": data.get("alerttime")
+            }
+            with open("servers/"+file, "w+", encoding="utf-8") as jsonf:
+                json.dump(newdata, jsonf, sort_keys = True, indent = 2, ensure_ascii = False)
+            jsonf.close() 
+    
+def update_server_data_prefix(serverid, prefix):
     data = get_server_data(serverid)
-    update_server_data(serverid, isenabled, data["channelid"], data["alerttime"])
+    update_server_data(serverid, prefix, data["channelid"], data["alerttime"])
     
 def update_server_data_channelid(serverid, channelid):
     data = get_server_data(serverid)
-    update_server_data(serverid, data["isenabled"], channelid, data["alerttime"])
+    update_server_data(serverid, data["prefix"], channelid, data["alerttime"])
     
 def update_server_data_alerttime(serverid, alerttime):
     data = get_server_data(serverid)
-    update_server_data(serverid, data["isenabled"], data["channelid"], alerttime)
-    
+    update_server_data(serverid, data["prefix"], data["channelid"], alerttime)
     
 def init_server_data(serverid):
     data = {
-        "isenabled": 0,
+        "prefix": "bt!",
         "channelid": 0,
         "alerttime": 15
     }

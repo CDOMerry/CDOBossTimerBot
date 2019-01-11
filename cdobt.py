@@ -13,14 +13,19 @@ from discord.ext.commands import Bot
 from discord.utils import find
 
 import cdobtserverdata
-
+import cdobtuserdata
 
 ############################################################
-BOT_PREFIX = "bt!"
 TOKEN = ""
+OWNER_ID = 420838696732983297
 ############################################################
 
-
+def BOT_PREFIX(bot, message):
+    if not message.guild:
+        return cdobtuserdata.get_user_data_by_key(message.author.id, "prefix")
+    else:
+        return cdobtserverdata.get_server_data_by_key(message.guild.id, "prefix")
+        
 cdobt = commands.Bot(command_prefix=BOT_PREFIX)
 cdobt.remove_command('help')
 
@@ -152,21 +157,50 @@ daysdict = {
         "2215": "Mudster (EU)"
     }
 }
+def is_owner():
+    global OWNER_ID
+    async def predicate(ctx):
+        return ctx.author.id == OWNER_ID
+    return commands.check(predicate)
  
 @cdobt.event
 async def on_message(message):
     if message.guild is not None:
         if not os.path.isfile("servers/"+str(message.guild.id)+".json"):
-            cdobtserverdata.init_server_data(message.guild.id)            
+            cdobtserverdata.init_server_data(message.guild.id)  
+    else:
+        if not os.path.isfile("users/"+str(message.author.id)+".json"):
+            cdobtuserdata.init_user_data(message.author.id) 
+    if cdobt.user.mention in message.content:
+        await message.channel.send("Please type " + BOT_PREFIX(cdobt, message) + "help to view the commands.")
     await cdobt.process_commands(message) 
-
+    
+@cdobt.command(pass_context = True)
+@is_owner()
+async def guilds(ctx):
+    s = ""
+    count = 0
+    guilds = cdobt.guilds
+    
+    embed = discord.Embed(title="guilds", description="", color=0xf44242)
+    for guild in guilds:
+        count += 1
+        s += guild.name+"\n"
+        embed.add_field(name=str(count)+"). "+guild.name, value="Owner: "+guild.owner.name+"#"+guild.owner.discriminator)
+        embed.add_field(name="guild ID: "+str(guild.id), value="Owner ID: "+str(guild.owner.id), inline=True)
+    await ctx.send(embed=embed) 
+    
 @cdobt.command(pass_context = True)
 async def enable(ctx):
-    if not ctx.message.author.guild_permissions.administrator:
-        await ctx.message.add_reaction("❌")
-        return
+    if ctx.guild is not None:
+        if not ctx.message.author.guild_permissions.administrator:
+            await ctx.message.add_reaction("❌")
+            return
     try:
-        cdobtserverdata.update_server_data_channelid(ctx.guild.id, ctx.channel.id)
+        if ctx.guild is not None:
+            cdobtserverdata.update_server_data_channelid(ctx.guild.id, ctx.channel.id)
+        else:
+            cdobtuserdata.update_user_data_channelid(ctx.message.author.id, ctx.channel.id)
         await ctx.message.add_reaction("✅")
     except Exception: 
         await ctx.message.add_reaction("❌")
@@ -174,11 +208,15 @@ async def enable(ctx):
   
 @cdobt.command(pass_context = True)
 async def disable(ctx):
-    if not ctx.message.author.guild_permissions.administrator:
-        await ctx.message.add_reaction("❌")
-        return
+    if ctx.guild is not None:
+        if not ctx.message.author.guild_permissions.administrator:
+            await ctx.message.add_reaction("❌")
+            return
     try:
-        cdobtserverdata.update_server_data_channelid(ctx.guild.id, 0)
+        if ctx.guild is not None:
+            cdobtserverdata.update_server_data_channelid(ctx.guild.id, 0)
+        else:
+            cdobtuserdata.update_user_data_channelid(ctx.message.author.id, 0)
         await ctx.message.add_reaction("✅")
     except Exception: 
         await ctx.message.add_reaction("❌")
@@ -186,43 +224,64 @@ async def disable(ctx):
         
 @cdobt.command(pass_context = True)
 async def alert(ctx, alerttime):  
-    if not ctx.message.author.guild_permissions.administrator:
-        await ctx.message.add_reaction("❌")
-        return
+    if ctx.guild is not None:
+        if not ctx.message.author.guild_permissions.administrator:
+            await ctx.message.add_reaction("❌")
+            return
     try: 
         if alerttime.isdigit():
             alerttime = int(alerttime)
             if alerttime >= 5 and alerttime <= 60:
-                cdobtserverdata.update_server_data_alerttime(ctx.guild.id, alerttime)
+                if ctx.guild is not None:
+                    cdobtserverdata.update_server_data_alerttime(ctx.guild.id, alerttime)
+                else:
+                    cdobtuserdata.update_user_data_alerttime(ctx.message.author.id, alerttime)
                 await ctx.message.add_reaction("✅")
     except Exception: 
         await ctx.message.add_reaction("❌")
         pass
+
+@cdobt.command(pass_context = True)
+async def prefix(ctx, prefix):  
+    if ctx.guild is not None:
+        if not ctx.message.author.guild_permissions.administrator:
+            await ctx.message.add_reaction("❌")
+            return
+    try: 
+        if not prefix.isspace():
+                if ctx.guild is not None:
+                    cdobtserverdata.update_server_data_prefix(ctx.guild.id, prefix)
+                else:
+                    cdobtuserdata.update_user_data_prefix(ctx.message.author.id, prefix)
+                await ctx.message.add_reaction("✅")
+        else:
+            await ctx.message.add_reaction("❌")
+    except Exception: 
+        await ctx.message.add_reaction("❌")
+        pass
+
         
-#@cdobt.command(pass_context = True) #this is really annoying and doesn't really serve a purpose, might be better if we were to make a role for each boss and ping the role depending on which boss spawned? idk, either way I'll add dm alerts soon and there will be literally no point to mentioning roles.
-#async def mention(ctx, rolename):      
-#    if not ctx.message.author.guild_permissions.administrator:
-#        await ctx.message.add_reaction("❌")
-#        return
-#    try:
-#        data = cdobtserverdata.get_server_data(ctx.guild.id) 
-#        for role in ctx.guild.roles:
-#            if role.name == rolename:
-#                cdobtserverdata.update_server_data_isenabled(ctx.guild.id, role.id) 
-#        await ctx.message.add_reaction("✅")
-#    except Exception: 
-#        await ctx.message.add_reaction("❌")
-#        pass            
-    
+@cdobt.command(pass_context = True)
+async def changelog(ctx):  
+    embed = discord.Embed(title="Changelog:", description="09/01/2019 (assuming I updated this date the last time I made changes)", color=0x89a4d4)
+    embed.add_field(name="Fixed:", value="Incorrect boss was shown as upcoming before 00:00 UTC (it was showing the first boss of the previous day instead of the next day.. woops).", inline=False)
+    embed.add_field(name="Added:", value="DM alerts! The bot now works in direct messages in the same way it works in guilds.", inline=False)
+    embed.add_field(name="Added:", value="Custom prefixes! Change it to whatever works for you, the initial prefix is still 'bt!'", inline=False)
+    embed.add_field(name="Added:", value="A changelog. :D", inline=False)
+#    embed.add_field(name="Improved:", value="Remade the system for saving and loading individual server settings. (shut up syzygy)", inline=False)
+    await ctx.send(embed=embed) 
+    await ctx.message.add_reaction("✅")      
+ 
 @cdobt.command(pass_context=True)
 async def help(ctx):
-    global BOT_PREFIX
-    embed = discord.Embed(title="Prefix: "+BOT_PREFIX, description="", color=0x89a4d4)
-    embed.add_field(name=BOT_PREFIX+"next", value="Displays the next boss spawn and how much time is remaining.", inline=False)
-    embed.add_field(name=BOT_PREFIX+"enable", value="Enables boss spawn alerts. Enter this command in the channel where you want alerts to be posted, alerts can only be active in one channel at a time. By default one message will be posted 15 minutes before the spawn and one when the boss spawns.", inline=False)
-    embed.add_field(name=BOT_PREFIX+"disable", value="Disables boss spawn alerts.", inline=False)
-    embed.add_field(name=BOT_PREFIX+"alert <time in minutes>", value="The bot will post a pre-spawn alert this many minutes before the boss spawns. (between 5 and 60 minutes, default is 15)", inline=False)
-#    embed.add_field(name=BOT_PREFIX+"mention <role name>", value="Enables role pings when the pre-spawn alert is posted.", inline=False)
+    prefix = BOT_PREFIX(cdobt, ctx.message)
+    embed = discord.Embed(title="Prefix: "+prefix, description="", color=0x89a4d4)
+    embed.add_field(name=prefix+"prefix <prefix>", value="Changes the command prefix.", inline=False)
+    embed.add_field(name=prefix+"next", value="Shows the next boss spawn and how much time is remaining.", inline=False)
+    embed.add_field(name=prefix+"enable", value="Enables boss spawn alerts. Enter this command in the channel where you want alerts to be posted, alerts can only be active in one channel at a time. By default one message will be posted 15 minutes before the spawn and one when the boss spawns.", inline=False)
+    embed.add_field(name=prefix+"disable", value="Disables boss spawn alerts.", inline=False)
+    embed.add_field(name=prefix+"alert <time in minutes>", value="The bot will post a pre-spawn alert this many minutes before the boss spawns. (between 5 and 60 minutes, default is 15)", inline=False)
+    embed.add_field(name=prefix+"changelog", value="Shows the last changelog.", inline=False)
     await ctx.send(embed=embed)  
     await ctx.message.add_reaction("✅")
     
@@ -248,7 +307,7 @@ async def next(ctx):
             await ctx.message.add_reaction("❌")
             pass
                 
-async def send_alerts(remaining, message):
+async def send_server_alerts(remaining, message):
     if remaining == None:
         return
     else:
@@ -258,9 +317,9 @@ async def send_alerts(remaining, message):
             filename = file.split(sep, 1)[0]
             data = cdobtserverdata.get_server_data(filename)
             if data["channelid"]:
-                channel = cdobt.get_channel(data["channelid"])   
-                color = 0x89a4d4
+                channel = cdobt.get_channel(data["channelid"])
                 
+                color = 0x89a4d4         
                 if message.startswith("Kzarka"):
                     color = 0xf44242
                 elif message.startswith("D. Bheg"): 
@@ -277,15 +336,43 @@ async def send_alerts(remaining, message):
                         await channel.send(embed=embed)   
                     elif remaining == data["alerttime"]:
                         embed = discord.Embed(title=message, description="upcoming in "+str(remaining)+" minutes...", color=color)
-                        await channel.send(embed=embed) 
-                        if data["isenabled"]:
-                            role = channel.guild.get_role(data["isenabled"])
-                            if role is not None:
-                                await channel.send(role.mention)                          
+                        await channel.send(embed=embed)                      
                 except Exception: 
                     pass
-    
-                 
+
+async def send_user_alerts(remaining, message):
+    if remaining == None:
+        return
+    else:
+        file_list=os.listdir("users/")
+        for file in file_list:
+            sep = '.'
+            filename = file.split(sep, 1)[0]
+            data = cdobtuserdata.get_user_data(filename)
+            if data["channelid"]:
+                channel = cdobt.get_channel(data["channelid"])
+                
+                color = 0x89a4d4         
+                if message.startswith("Kzarka"):
+                    color = 0xf44242
+                elif message.startswith("D. Bheg"): 
+                    color = 0xbd43f2
+                elif message.startswith("Mudster"):
+                    color = 0x40f7f4
+                elif message.startswith("Dim Tree"):
+                    color = 0x2de527
+                elif message.startswith("R. Nose"):
+                    color = 0xff9d0a
+                try:
+                    if remaining == 0:
+                        embed = discord.Embed(title=message, description="has spawned!", color=color)
+                        await channel.send(embed=embed)   
+                    elif remaining == data["alerttime"]:
+                        embed = discord.Embed(title=message, description="upcoming in "+str(remaining)+" minutes...", color=color)
+                        await channel.send(embed=embed)                      
+                except Exception: 
+                    pass
+              
 async def date_time_check():
     global daysdict 
     
@@ -319,7 +406,7 @@ async def date_time_check():
             if curtimesimple > closesttime:
                 if closestindex == len(times)-1:
                     nextbosstime = times[0]
-                    nextbossday = days[days.index(day)-1]
+                    nextbossday = days[days.index(day)+1]
                 else:
                     nextbosstime = times[timessimple.index(closesttime)+1]
                     nextbossday = days[days.index(day)]
@@ -352,15 +439,14 @@ def strf_delta(tdelta, fmt): #https://stackoverflow.com/a/8907269
   
 async def background_subroutine():
     await cdobt.wait_until_ready()
+#    cdobtserverdata.fix_old_server_data()
     lastremaining = 0
     while not cdobt.is_closed():
         bossandremaining = await date_time_check()
         await cdobt.change_presence(status=discord.Status.online, activity=discord.Game(name=bossandremaining["boss"]+" in "+str(bossandremaining["remaining"])+" minutes..."))
         if bossandremaining["remaining"] != lastremaining:
-            if bossandremaining["remaining"] == 0:
-                await send_alerts(0, bossandremaining["boss"])
-            else:
-                await send_alerts(bossandremaining["remaining"], bossandremaining["boss"])
+            await send_server_alerts(bossandremaining["remaining"], bossandremaining["boss"])
+            await send_user_alerts(bossandremaining["remaining"], bossandremaining["boss"])
             lastremaining = bossandremaining["remaining"]
         await asyncio.sleep(60)
     
@@ -370,5 +456,4 @@ async def on_ready():
     cdobt.loop.create_task(background_subroutine()) 
     print("CDO Boss Timer Bot by Merry#9999 :3")
     print("Logging in as "+cdobt.user.name+"...")
-
 cdobt.run(TOKEN)

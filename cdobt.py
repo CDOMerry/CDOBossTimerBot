@@ -31,130 +31,130 @@ cdobt.remove_command('help')
 
 daysdict = { 
     "mon": {
-        "0000": "Kzarka (EU)",
+        "0000": "Karanda and Kzarka (EU)",
         "0100": "D. Bheg (NA)",
         "0300": "R. Nose (EU)",
         "0415": "Kzarka (NA)",
-        "0615": "Mudster (NA)",
+        "0615": "Kutum, Karanda, and Mudster (NA)",
         "0700": "Kzarka (EU)",
-        "0800": "Kzarka (NA)",
-        "1000": "Dim Tree (EU)",
+        "0800": "Karanda and Kzarka (NA)",
+        "1000": "Nouver and Dim Tree (EU)",
         "1100": "R. Nose (NA)",
-        "1400": "R. Nose (EU)",
+        "1400": "Kutum and R. Nose (EU)",
         "1500": "Kzarka (NA)",
-        "1700": "Mudster (EU)",
-        "1800": "Dim Tree (NA)",
+        "1700": "Nouver and Mudster (EU)",
+        "1800": "Nouver and Dim Tree (NA)",
         "2015": "D. Bheg (EU)",
-        "2200": "R. Nose (NA)",
-        "2215": "Dim Tree (EU)"
+        "2200": "Kutum and R. Nose (NA)",
+        "2215": "Karanda and Dim Tree (EU)"
     },
     "tue": {
-        "0000": "Mudster (EU)",
-        "0100": "Mudster (NA)",
+        "0000": "Kutum and Mudster (EU)",
+        "0100": "Nouver and Mudster (NA)",
         "0300": "Kzarka (EU)",
         "0415": "D. Bheg (NA)",
-        "0615": "Dim Tree (NA)",
-        "0700": "Dim Tree (EU)",
-        "0800": "Mudster (NA)",
+        "0615": "Karanda and Dim Tree (NA)",
+        "0700": "Kutum and Dim Tree (EU)",
+        "0800": "Kutum and Mudster (NA)",
         "1000": "Kzarka (EU)",
         "1100": "Kzarka (NA)",
-        "1400": "Mudster (EU)",
-        "1500": "Dim Tree (NA)",
-        "1700": "R. Nose (EU)",
+        "1400": "Nouver and Mudster (EU)",
+        "1500": "Kutum and Dim Tree (NA)",
+        "1700": "Karanda and R. Nose (EU)",
         "1800": "Kzarka (NA)",
-        "2015": "Dim Tree (EU)",
-        "2200": "Mudster (NA)",
-        "2215": "D. Bheg (EU)"
+        "2015": "Nouver and Dim Tree (EU)",
+        "2200": "Nouver and Mudster (NA)",
+        "2215": "Kutum and D. Bheg (EU)"
     },
     "wed": {
-        "0000": "R. Nose (EU)",
-        "0100": "R. Nose (NA)",
+        "0000": "Karanda and R. Nose (EU)",
+        "0100": "Karanda and R. Nose (NA)",
         "0300": "Dim Tree (EU)",
-        "0415": "Dim Tree (NA)",
-        "0615": "D. Bheg (NA)",
-        "0700": "Kzarka (EU)",
-        "0800": "R. Nose (NA)",
-        "1000": "Mudster (EU)",
+        "0415": "Nouver and Dim Tree (NA)",
+        "0615": "Kutum and D. Bheg (NA)",
+        "0700": "Karanda and Kzarka (EU)",
+        "0800": "Karanda R. Nose (NA)",
+        "1000": "Nouver and Mudster (EU)",
         "1100": "Dim Tree (NA)",
         "1400": "Kzarka (EU)",
-        "1500": "Kzarka (NA)",
-        "1700": "Dim Tree (EU)",
-        "1800": "Mudster (NA)",
-        "2015": "R. Nose (EU)",
+        "1500": "Karanda and Kzarka (NA)",
+        "1700": "Kutum and Dim Tree (EU)",
+        "1800": "Nouver and Mudster (NA)",
+        "2015": "Karanda and R. Nose (EU)",
         "2200": "Kzarka (NA)",
-        "2215": "Kzarka (EU)"
+        "2215": "Nouver and Kzarka (EU)"
     },
     "thu": {
-        "0000": "Dim Tree (EU)",
-        "0100": "Dim Tree (NA)",
+        "0000": "Kutum and Dim Tree (EU)",
+        "0100": "Kutum and Dim Tree (NA)",
         "0300": "R. Nose (EU)",
-        "0415": "R. Nose (NA)",
-        "0615": "Kzarka (NA)",
-        "0700": "Mudster (EU)",
-        "0800": "Dim Tree (NA)",
-        "1000": "Kzarka (EU)",
+        "0415": "Karanda and R. Nose (NA)",
+        "0615": "Nouver and Kzarka (NA)",
+        "0700": "Kutum and Mudster (EU)",
+        "0800": "Kutum and Dim Tree (NA)",
+        "1000": "Nouver and Kzarka (EU)",
         "1100": "R. Nose (NA)",
-        "1400": "Dim Tree (EU)",
-        "1500": "Mudster (NA)",
+        "1400": "Kutum and Dim Tree (EU)",
+        "1500": "Kutum and Mudster (NA)",
         "1700": "Kzarka (EU)",
-        "1800": "Kzarka (NA)",
-        "2015": "Dim Tree (EU)",
-        "2200": "Dim Tree (NA)",
+        "1800": "Nouver and Kzarka (NA)",
+        "2015": "Karanda and Dim Tree (EU)",
+        "2200": "Kutum and Dim Tree (NA)",
         "2215": "R. Nose (EU)"
     },
     "fri": {
-        "0000": "D. Bheg (EU)",
+        "0000": "Nouver and D. Bheg (EU)",
         "0100": "Kzarka (NA)",
-        "0300": "Mudster (EU)",
-        "0415": "Dim Tree (NA)",
+        "0300": "Karanda and Mudster (EU)",
+        "0415": "Karanda and Dim Tree (NA)",
         "0615": "R. Nose (NA)",
-        "0700": "R. Nose (EU)",
-        "0800": "D. Bheg (NA)",
-        "1000": "Dim Tree (EU)",
-        "1100": "Mudster (NA)",
-        "1400": "Kzarka (EU)",
-        "1500": "R. Nose (NA)",
+        "0700": "Kutum and R. Nose (EU)",
+        "0800": "Nouver and D. Bheg (NA)",
+        "1000": "Karanda and Dim Tree (EU)",
+        "1100": "Karanda and Mudster (NA)",
+        "1400": "Nouver and Kzarka (EU)",
+        "1500": "Kutum and R. Nose (NA)",
         "1700": "D. Bheg (EU)",
-        "1800": "Dim Tree (NA)",
-        "2015": "Kzarka (EU)",
-        "2200": "Kzarka (NA)",
-        "2215": "Dim Tree (EU)"
+        "1800": "Karanda and Dim Tree (NA)",
+        "2015": "Kutum and Kzarka (EU)",
+        "2200": "Nouver and Kzarka (NA)",
+        "2215": "Karanda and Dim Tree (EU)"
     },
     "sat": {
         "0000": "Mudster (EU)",
         "0100": "D. Bheg (NA)",
-        "0300": "D. Bheg (EU)",
-        "0415": "Kzarka (NA)",
-        "0615": "Dim Tree (NA)",
-        "0700": "Dim Tree (EU)",
+        "0300": "Nouver and D. Bheg (EU)",
+        "0415": "Kutum and Kzarka (NA)",
+        "0615": "Karanda and Dim Tree (NA)",
+        "0700": "Kutum and Dim Tree (EU)",
         "0800": "Mudster (NA)",
-        "1000": "R. Nose (EU)",
-        "1100": "D. Bheg (NA)",
+        "1000": "Nouver and R. Nose (EU)",
+        "1100": "Nouver and D. Bheg (NA)",
         "1400": "D. Bheg (EU)",
-        "1500": "Dim Tree (NA)",
-        "1700": "Kzarka (EU)",
-        "1800": "R. Nose (NA)",
+        "1500": "Kutum and Dim Tree (NA)",
+        "1700": "Karanda and Kzarka (EU)",
+        "1800": "Nouver and R. Nose (NA)",
         "2015": "R. Nose (EU)",
         "2200": "D. Bheg (NA)",
-        "2215": "Kzarka (EU)"
+        "2215": "Nouver, Kutum, and Kzarka (EU)"
     },
     "sun": {
         "0000": "R. Nose (EU)",
-        "0100": "Kzarka (NA)",
-        "0300": "Dim Tree (EU)",
+        "0100": "Karanda and Kzarka (NA)",
+        "0300": "Kutum and Dim Tree (EU)",
         "0415": "R. Nose (NA)",
-        "0615": "Kzarka (NA)",
-        "0700": "Kzarka (EU)",
+        "0615": "Nouver, Kutum, and Kzarka (NA)",
+        "0700": "Nouver and Kzarka (EU)",
         "0800": "R. Nose (NA)",
         "1000": "Kzarka (EU)",
-        "1100": "Dim Tree (NA)",
+        "1100": "Kutum and Dim Tree (NA)",
         "1400": "R. Nose (EU)",
-        "1500": "Kzarka (NA)",
+        "1500": "Nouver and Kzarka (NA)",
         "1700": "D. Bheg (EU)",
         "1800": "Kzarka (NA)",
         "2015": "Kzarka (EU)",
         "2200": "R. Nose (NA)",
-        "2215": "Mudster (EU)"
+        "2215": "Kutum, Karanda, and Mudster (EU)"
     }
 }
 def is_owner():
@@ -263,11 +263,8 @@ async def prefix(ctx, prefix):
         
 @cdobt.command(pass_context = True)
 async def changelog(ctx):  
-    embed = discord.Embed(title="Changelog:", description="09/01/2019 (assuming I updated this date the last time I made changes)", color=0x89a4d4)
-    embed.add_field(name="Fixed:", value="Incorrect boss was shown as upcoming before 00:00 UTC (it was showing the first boss of the previous day instead of the next day.. woops).", inline=False)
-    embed.add_field(name="Added:", value="DM alerts! The bot now works in direct messages in the same way it works in guilds.", inline=False)
-    embed.add_field(name="Added:", value="Custom prefixes! Change it to whatever works for you, the initial prefix is still 'bt!'", inline=False)
-    embed.add_field(name="Added:", value="A changelog. :D", inline=False)
+    embed = discord.Embed(title="Changelog:", description="17/01/2019 (assuming I updated this date the last time I made changes)", color=0x89a4d4)
+    embed.add_field(name="Added:", value="New boss spawns, if one of these are incorrect for the love of god tell me. I'm no longer playing regularly so it's hard for me to catch everything without constantly bugging people who are playing.", inline=False)
 #    embed.add_field(name="Improved:", value="Remade the system for saving and loading individual server settings. (shut up syzygy)", inline=False)
     await ctx.send(embed=embed) 
     await ctx.message.add_reaction("✅")      
@@ -289,7 +286,13 @@ async def help(ctx):
 async def next(ctx):
         bossandremaining = await date_time_check()
         color = 0x89a4d4
-        if bossandremaining["boss"].startswith("Kzarka"):
+        if bossandremaining["boss"].startswith("Karanda"):
+            color = 0x12418E
+        elif bossandremaining["boss"].startswith("Kutum"):
+            color = 0x352959
+        elif bossandremaining["boss"].startswith("Nouver"):
+            color = 0xCC7A00
+        elif bossandremaining["boss"].startswith("Kzarka"):
             color = 0xf44242
         elif bossandremaining["boss"].startswith("D. Bheg"): 
             color = 0xbd43f2
@@ -319,8 +322,14 @@ async def send_server_alerts(remaining, message):
             if data["channelid"]:
                 channel = cdobt.get_channel(data["channelid"])
                 
-                color = 0x89a4d4         
-                if message.startswith("Kzarka"):
+                color = 0x89a4d4   
+                if message.startswith("Karanda"):
+                    color = 0x12418E
+                elif message.startswith("Kutum"):
+                    color = 0x352959
+                elif message.startswith("Nouver"):
+                    color = 0xCC7A00
+                elif message.startswith("Kzarka"):
                     color = 0xf44242
                 elif message.startswith("D. Bheg"): 
                     color = 0xbd43f2
@@ -352,8 +361,14 @@ async def send_user_alerts(remaining, message):
             if data["channelid"]:
                 channel = cdobt.get_channel(data["channelid"])
                 
-                color = 0x89a4d4         
-                if message.startswith("Kzarka"):
+                color = 0x89a4d4   
+                if message.startswith("Karanda"):
+                    color = 0x12418E
+                elif message.startswith("Kutum"):
+                    color = 0x352959
+                elif message.startswith("Nouver"):
+                    color = 0xCC7A00
+                elif message.startswith("Kzarka"):
                     color = 0xf44242
                 elif message.startswith("D. Bheg"): 
                     color = 0xbd43f2
@@ -405,8 +420,12 @@ async def date_time_check():
      
             if curtimesimple > closesttime:
                 if closestindex == len(times)-1:
-                    nextbosstime = times[0]
-                    nextbossday = days[days.index(day)+1]
+                    if day == "sun":
+                        nextbosstime = times[0]
+                        nextbossday = days[0]
+                    else:
+                        nextbosstime = times[0]
+                        nextbossday = days[days.index(day)+1]
                 else:
                     nextbosstime = times[timessimple.index(closesttime)+1]
                     nextbossday = days[days.index(day)]

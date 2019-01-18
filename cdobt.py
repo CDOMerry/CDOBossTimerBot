@@ -178,17 +178,17 @@ async def on_message(message):
 @cdobt.command(pass_context = True)
 @is_owner()
 async def guilds(ctx):
-    s = ""
     count = 0
     guilds = cdobt.guilds
     
     embed = discord.Embed(title="guilds", description="", color=0xf44242)
     for guild in guilds:
         count += 1
-        s += guild.name+"\n"
         embed.add_field(name=str(count)+"). "+guild.name, value="Owner: "+guild.owner.name+"#"+guild.owner.discriminator)
-        embed.add_field(name="guild ID: "+str(guild.id), value="Owner ID: "+str(guild.owner.id), inline=True)
-    await ctx.send(embed=embed) 
+        embed.add_field(name="Guild ID: "+str(guild.id), value="Owner ID: "+str(guild.owner.id), inline=False)
+        if count % 10 == 0 or guild == guilds[-1]:
+            await ctx.send(embed=embed) 
+            embed.clear_fields()
     
 @cdobt.command(pass_context = True)
 async def enable(ctx):
@@ -275,7 +275,7 @@ async def help(ctx):
     embed = discord.Embed(title="Prefix: "+prefix, description="", color=0x89a4d4)
     embed.add_field(name=prefix+"prefix <prefix>", value="Changes the command prefix.", inline=False)
     embed.add_field(name=prefix+"next", value="Shows the next boss spawn and how much time is remaining.", inline=False)
-    embed.add_field(name=prefix+"enable", value="Enables boss spawn alerts. Enter this command in the channel where you want alerts to be posted, alerts can only be active in one channel at a time. By default one message will be posted 15 minutes before the spawn and one when the boss spawns.", inline=False)
+    embed.add_field(name=prefix+"enable", value="Enables boss spawn alerts. Enter this command in a server channel or in the bot's DMs. By default one message will be posted 15 minutes before the spawn and one when the boss spawns.", inline=False)
     embed.add_field(name=prefix+"disable", value="Disables boss spawn alerts.", inline=False)
     embed.add_field(name=prefix+"alert <time in minutes>", value="The bot will post a pre-spawn alert this many minutes before the boss spawns. (between 5 and 60 minutes, default is 15)", inline=False)
     embed.add_field(name=prefix+"changelog", value="Shows the last changelog.", inline=False)
